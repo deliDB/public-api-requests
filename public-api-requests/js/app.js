@@ -55,7 +55,8 @@ function displayUsers(data){
 **/
 function createModal(i){
     const user = userData[i];
-    //Formats date to mm/dd/year format
+    
+    //Formats date to mm/dd/year format. Source: https://www.freecodecamp.org/news/how-to-format-dates-in-javascript/
     const formattedDate = new Date(user.dob.date).toLocaleDateString('en-US');
     html = `
         <div class="modal-container">
@@ -83,15 +84,17 @@ function createModal(i){
     body.insertAdjacentHTML('beforeend', html)
 
    closeModal()
-   nextModal(i)
-   prevModal(i)
+   nextModal(i) 
+   prevModal(i) 
 }
 
 //Opens modal when employee card clicked.
 gallery.addEventListener('click',  e => {
     const clickedItem = e.target;
-    const index = clickedItem.closest('.card').getAttribute('data-index');
-    createModal(index);
+    if(clickedItem.matches('.card, .card *')){
+        const index = clickedItem.closest('.card').getAttribute('data-index');
+        createModal(index);
+    } 
 });
 
 //Closes modal when "X" is clicked.
@@ -133,17 +136,10 @@ function prevModal(index){
     prevBtn.addEventListener('click', () => {
         modalContainer.remove();
         index--
-        if(index > 0){
+        if(index >= 0){
             createModal(index);
         } else {
-            //stops at 1st user, doesn't cycle through again
-            createModal(0)
-
-            //no errors, skips first user
-            //createModal(userData.length - 1)
-
-            //creates an error before getting to 1st user
-            //createModal(userData.length)
+            createModal(userData.length - 1);
         }
     });
 }
@@ -172,21 +168,17 @@ function searchEmployees(searchInput, data){
     }
     if(filteredList.length !== 0){
         gallery.innerHTML = '';
-        displayUsers(filteredList);
-    } else {
+        userData = filteredList; //fixes modal but you have to refresh to restore a list of employees
+        displayUsers(userData);
+    } else{
         gallery.innerHTML = `<h2>No results found!<h2/>`;
     }
-    
 }
 
- const submit = document.getElementById('search-submit');
  const input = document.getElementById('search-input');
- submit.addEventListener('click', () => {
+ input.addEventListener('keyup', () => {
        searchEmployees(input, userData)
   });
   
-/**
- * Console error, if you click space around the card
- * prevModal doesn't cycle through again, stops at first user
- */
+
   
