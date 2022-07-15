@@ -54,7 +54,7 @@ function displayUsers(data){
 * @param {number} i - The index of the clicked employee card.
 **/
 function createModal(i){
-    const user = userData[i];
+        const user = userData[i] 
     
     //Formats date to mm/dd/year format. Source: https://www.freecodecamp.org/news/how-to-format-dates-in-javascript/
     const formattedDate = new Date(user.dob.date).toLocaleDateString('en-US');
@@ -159,8 +159,8 @@ searchContainer.insertAdjacentHTML('beforeend', `
 * @param {array} data - Array of employee objects that match user input for filtering
 **/
 function searchEmployees(searchInput, data){
-    let filteredList = [];
     const inputValue = searchInput.value;
+    let filteredList = [];
     for(const employee of data){  
        if(employee.name.first.toLowerCase().includes(inputValue.toLowerCase()) || employee.name.last.toLowerCase().includes(inputValue.toLowerCase())){
           filteredList.push(employee);   
@@ -168,8 +168,7 @@ function searchEmployees(searchInput, data){
     }
     if(filteredList.length !== 0){
         gallery.innerHTML = '';
-        userData = filteredList; //fixes modal but you have to refresh to restore a list of employees
-        displayUsers(userData);
+        displayUsers(filteredList);
     } else{
         gallery.innerHTML = `<h2>No results found!<h2/>`;
     }
