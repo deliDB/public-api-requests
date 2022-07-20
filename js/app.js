@@ -144,40 +144,7 @@ function prevModal(index){
     });
 }
 
-//Appends search bar to the DOM.
-searchContainer.insertAdjacentHTML('beforeend', `
-    <form action="#" method="get">
-    <input type="search" id="search-input" class="search-input" placeholder="Search...">
-    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-    </form>
-`);
 
-/**
-* Function that pushes employee objects matching the value entered in the search bar into an empty array.
-*
-* @param {string} searchInput - User input into the search bar
-* @param {array} data - Array of employee objects that match user input for filtering
-**/
-function searchEmployees(searchInput, data){
-    const inputValue = searchInput.value;
-    let filteredList = [];
-    for(const employee of data){  
-       if(employee.name.first.toLowerCase().includes(inputValue.toLowerCase()) || employee.name.last.toLowerCase().includes(inputValue.toLowerCase())){
-          filteredList.push(employee);   
-       } 
-    }
-    if(filteredList.length !== 0){
-        gallery.innerHTML = '';
-        displayUsers(filteredList);
-    } else{
-        gallery.innerHTML = `<h2>No results found!<h2/>`;
-    }
-}
-
- const input = document.getElementById('search-input');
- input.addEventListener('keyup', () => {
-       searchEmployees(input, userData)
-  });
   
 
   
